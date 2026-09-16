@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic-dev-kit"
+version = "0.1.0"
+description = "Local evidence gates for coding-agent changes, starting with staged Git scope"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{name = "Amossse"}]
+dependencies = []
+keywords = ["ai-agents", "claude-code", "git", "code-review", "developer-tools"]
+
+[project.urls]
+Homepage = "https://github.com/Amossse/agentic-dev-kit"
+Issues = "https://github.com/Amossse/agentic-dev-kit/issues"
+
+[project.scripts]
+staged-scope = "agentic_devkit.staged_scope:main"
+
+[tool.setuptools.packages.find]
+include = ["agentic_devkit*"]
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
