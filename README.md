@@ -15,6 +15,7 @@ after Claude Code, Codex, or another CLI agent finishes.
 | Capability | Type | Input → evidence | Status |
 | --- | --- | --- | --- |
 | [Staged Scope](capabilities/cli/staged-scope/README.md) | Developer CLI | Git index + literal allow paths → per-path decision and exit code | Released in v0.1.0 |
+| [Range Scope](capabilities/cli/range-scope/README.md) | CI / PR CLI | Base + head commits → merge-base path decision and exit code | Released in v0.2.0 |
 
 The main repository is the installation, contribution and release entry point.
 Each capability has its own documentation and reproducible example. Future
@@ -26,11 +27,12 @@ there are no placeholder implementations.
 Requires Python 3.11+ and Git on PATH. No runtime Python dependencies or API keys.
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.1.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.2.0
 staged-scope --version
+range-scope --version
 ```
 
-Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.1.0`.
+Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.2.0`.
 
 ## Five-minute quick start
 
@@ -64,6 +66,15 @@ It prints three checked outcomes: empty/3, rejected/1 with
 files only in a temporary repository and cleans it up on exit.
 See [input, actual output and implementation](capabilities/cli/staged-scope/README.md).
 
+For a committed branch or pull request, compare its divergence point with the
+candidate head:
+
+```bash
+range-scope . --base origin/main --head HEAD --allow src/payments/ --allow tests/
+```
+
+See the [Range Scope CI checkout and demo](capabilities/cli/range-scope/README.md).
+
 ## Boundaries
 
 The inspected CLI uses fixed read-only Git commands. It does not run a model,
@@ -72,8 +83,8 @@ filenames and scope rules, which may be confidential. Review output before
 sharing. Use your trusted Git installation and working tree; this is not a
 sandbox for malicious Git repositories.
 
-The check covers HEAD versus index, including initial commits and both sides
-of a rename. It does not inspect unstaged/untracked contents, determine who
+The gates cover HEAD versus index or merge-base versus a committed head,
+including both sides of a rename. They do not determine who
 created an edit, verify code correctness, or lock the index until commit. Review
 pre-existing staged changes and rerun after staging changes. A plain CI checkout
 has an empty index; the gate requires a job that has deliberately prepared one.
@@ -81,8 +92,8 @@ has an empty index; the gate requires a job that has deliberately prepared one.
 ## Project and contribution
 
 MIT. [License](LICENSE) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
-· [Research and existing tools](docs/research-2026-09-16.md)
-· [Validation](docs/validation-2026-09-16.md) · [Prepared launch copy](PROMOTION.md).
+· [Latest research and existing tools](docs/research-2026-09-20.md)
+· [Latest validation](docs/validation-2026-09-20.md) · [Prepared launch copy](PROMOTION.md).
 
 Search terms: Claude Code workflow, coding agent handoff, staged Git scope,
 agentic developer toolkit, commit boundary, monorepo change gate.

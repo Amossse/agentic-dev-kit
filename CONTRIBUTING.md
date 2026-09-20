@@ -14,6 +14,7 @@ From a clone with Python 3.11+ and Git:
 ```bash
 python3.11 -m unittest discover -s tests -v
 python3.11 examples/staged_scope_demo.py
+python3.11 examples/range_scope_demo.py
 uvx ruff check .
 uvx ruff format --check .
 uvx ty check .

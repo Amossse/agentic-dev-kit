@@ -1,5 +1,46 @@
 # Prepared launch copy — not posted
 
+## v0.2.0 English
+
+**Agentic Dev Kit v0.2.0 adds Range Scope for coding-agent PRs.**
+
+Your agent fixed `src/payment.py` and also committed a workflow edit. Range
+Scope compares the branch's merge base to its head, checks every raw Git path
+against literal file/directory rules, and exits nonzero with deterministic JSON.
+Base-branch changes after divergence are excluded. Renames check both endpoints.
+
+```bash
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.2.0 range-scope . --base origin/main --head HEAD --allow src/ --allow tests/
+```
+
+Python stdlib + Git, offline and read-only: no model, token, fetch, checkout or
+automatic fix. It checks paths rather than correctness or authorship. Try the
+three-outcome disposable demo and bring a reproducible CI boundary case.
+
+Repository: https://github.com/Amossse/agentic-dev-kit
+Release: https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.2.0
+
+## v0.2.0 中文
+
+**Agentic Dev Kit v0.2.0 新增 coding-agent PR 提交范围门禁。**
+
+Agent 修了 `src/payment.py`，却同时提交了 workflow 文件。Range Scope 从分支
+merge-base 检查到候选 head，用字面文件/目录规则判定每个 Git 路径，输出稳定
+JSON 和非零退出码；base 分叉后的自身改动不会混入，移动文件两端都需通过。
+
+```bash
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.2.0 range-scope . --base origin/main --head HEAD --allow src/ --allow tests/
+```
+
+Python 标准库 + Git，离线只读，无模型、token、fetch、checkout 或自动修复。
+只证明路径范围，不判断正确性和编辑归属。欢迎运行三种结果的临时仓库演示，
+并提交可复现的 CI 边界案例。
+
+仓库：https://github.com/Amossse/agentic-dev-kit
+版本：https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.2.0
+
+---
+
 ## English
 
 **Agentic Dev Kit: check the commit your coding agent is about to hand you.**

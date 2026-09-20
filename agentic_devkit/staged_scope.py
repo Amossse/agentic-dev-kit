@@ -87,29 +87,10 @@ def records(raw: bytes) -> list[tuple[bytes, str]]:
     return sorted(set(result))
 
 
-def inspect(root: Path, scopes: list[bytes]) -> tuple[dict, int]:
-    git = shutil.which("git")
-    if git is None:
-        raise InputError("Git is required on PATH")
-    top = git_output(git, root, ["rev-parse", "--show-toplevel"])
-    if not top.endswith(b"\n") or not top[:-1]:
-        raise InputError("select a Git working tree")
-    repo = Path(os.fsdecode(top[:-1]))
-    raw = git_output(
-        git,
-        repo,
-        [
-            "diff",
-            "--cached",
-            "--name-status",
-            "-z",
-            "--no-renames",
-            "--no-ext-diff",
-            "--no-textconv",
-            "--ignore-submodules=none",
-            "--",
-        ],
-    )
+def scope_report(
+    raw: bytes, scopes: list[bytes], metadata: dict[str, str] | None = None
+) -> tuple[dict, int]:
+    """Build the shared stable report for staged and commit-range gates."""
     changes = []
     for path, status in records(raw):
         matched = next(
@@ -139,14 +120,47 @@ def inspect(root: Path, scopes: list[bytes]) -> tuple[dict, int]:
         )
     rejected = sum(change["rejected_reason"] is not None for change in changes)
     state = "empty" if not changes else "rejected" if rejected else "approved"
-    return {
+    report = {
         "schema_version": 1,
         "state": state,
         "allow": [scope.decode("utf-8") for scope in scopes],
         "changed_records": len(changes),
         "rejected_records": rejected,
         "changes": changes,
-    }, 3 if not changes else 1 if rejected else 0
+    }
+    if metadata:
+        report.update(metadata)
+    return report, 3 if not changes else 1 if rejected else 0
+
+
+def repository(root: Path) -> tuple[str, Path]:
+    git = shutil.which("git")
+    if git is None:
+        raise InputError("Git is required on PATH")
+    top = git_output(git, root, ["rev-parse", "--show-toplevel"])
+    if not top.endswith(b"\n") or not top[:-1]:
+        raise InputError("select a Git working tree")
+    return git, Path(os.fsdecode(top[:-1]))
+
+
+def inspect(root: Path, scopes: list[bytes]) -> tuple[dict, int]:
+    git, repo = repository(root)
+    raw = git_output(
+        git,
+        repo,
+        [
+            "diff",
+            "--cached",
+            "--name-status",
+            "-z",
+            "--no-renames",
+            "--no-ext-diff",
+            "--no-textconv",
+            "--ignore-submodules=none",
+            "--",
+        ],
+    )
+    return scope_report(raw, scopes)
 
 
 def main(argv: list[str] | None = None) -> int:

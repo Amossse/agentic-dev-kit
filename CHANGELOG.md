@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 — 2026-09-20
+
+- Add Range Scope for read-only merge-base-to-head path gates in PR and CI flows.
+- Reuse Staged Scope's literal path validation, NUL-safe records, deterministic
+  JSON, fixed Git execution and exit-code contract.
+- Add bilingual docs, divergent-history and rename fixtures, CI example,
+  research, validation evidence and prepared launch copy.
+
 ## 0.1.0 — 2026-09-16
 
 - Establish the Agentic Dev Kit main installation and contribution entry point.

@@ -11,6 +11,7 @@
 | 能力 | 类型 | 输入 → 输出 | 状态 |
 | --- | --- | --- | --- |
 | [Staged Scope](capabilities/cli/staged-scope/README.zh-CN.md) | 开发者自动化 CLI | Git index + 字面路径白名单 → JSON 判定、退出码 | v0.1.0 已实现 |
+| [Range Scope](capabilities/cli/range-scope/README.zh-CN.md) | CI / PR CLI | base + head → merge-base 路径判定、退出码 | v0.2.0 已实现 |
 
 该仓库作为后续能力的统一安装、贡献和发布入口。新增能力须有真实工程用途和
 可运行检查；现有独立项目不在本次迁移范围内。
@@ -20,7 +21,7 @@
 需要 Python 3.11+、PATH 中的 Git，无运行时 Python 依赖、无需 API key。
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.1.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.2.0
 git status --short
 git diff --cached
 staged-scope . --allow src/payments/ --allow tests/test_payments.py
@@ -38,11 +39,20 @@ stdout 输出 JSON，stderr 只输出状态和数量。退出码 `0`：非空且
 git clone https://github.com/Amossse/agentic-dev-kit.git
 cd agentic-dev-kit
 python3.11 examples/staged_scope_demo.py --installed
+python3.11 examples/range_scope_demo.py --installed
 ```
 
 演示在临时 Git 仓库内生成 payment 修复和额外 CI 文件，依次验证空 index、
 越界拒绝、撤去 CI 暂存后的通过。不会改动当前仓库；临时示例在退出时清理。
 也可在克隆根目录用 `python3.11 -m agentic_devkit.staged_scope` 运行源码。
+
+已提交分支或 PR 使用：
+
+```bash
+range-scope . --base origin/main --head HEAD --allow src/payments/ --allow tests/
+```
+
+它按 merge-base 到候选 head 检查，不把 base 后续新增的改动算进候选分支。
 
 ## 实现、安全与限制
 
@@ -59,5 +69,5 @@ CLI 只读、离线，不运行 hook、外部 diff/textconv、模型或用户代
 没有暂存改动，需由任务明确构造 index 后才适用。详细规则见模块文档。
 
 MIT；[贡献指南](CONTRIBUTING.md)、[CHANGELOG](CHANGELOG.md)、
-[趋势与竞品](docs/research-2026-09-16.md)、[验证记录](docs/validation-2026-09-16.md)、
+[最新趋势与竞品](docs/research-2026-09-20.md)、[最新验证记录](docs/validation-2026-09-20.md)、
 [中英文推广文案](PROMOTION.md)。

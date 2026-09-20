@@ -1,0 +1,5 @@
+[
+  {"changed_records": 0, "exit": 3, "rejected_paths": [], "state": "empty"},
+  {"changed_records": 2, "exit": 1, "rejected_paths": [".github/workflows/ci.yml"], "state": "rejected"},
+  {"changed_records": 1, "exit": 0, "rejected_paths": [], "state": "approved"}
+]
