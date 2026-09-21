@@ -1,5 +1,48 @@
 # Prepared launch copy — not posted
 
+## v0.3.0 English
+
+**Agentic Dev Kit v0.3.0 adds Test Proof for coding-agent handoffs.**
+
+Your agent says tests passed, then edits the branch. Test Proof runs your real test
+command, fingerprints Git HEAD plus the tracked diff before and after, and writes a
+receipt. Verify it later: any tracked edit, commit, or untracked file makes it stale.
+
+```bash
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.3.0 test-proof run . -- python -m unittest
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.3.0 test-proof verify .
+```
+
+Python stdlib + Git, offline, provider-neutral, no model or API key. It uses no
+shell string, but it does execute the command you provide and is not a sandbox.
+The receipt proves an exit code against represented Git state—not test quality,
+coverage or external-service reproducibility.
+
+Repository: https://github.com/Amossse/agentic-dev-kit
+Release: https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.3.0
+
+## v0.3.0 中文
+
+**Agentic Dev Kit v0.3.0 新增 coding-agent 测试凭证 Test Proof。**
+
+Agent 说测试通过后又改了代码，原结论就已过期。Test Proof 执行真实测试命令，
+在前后对 Git HEAD 和已跟踪 diff 做指纹并写入凭证；之后出现已跟踪修改、commit
+或未跟踪文件时，复验会直接判定 stale。
+
+```bash
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.3.0 test-proof run . -- python -m unittest
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.3.0 test-proof verify .
+```
+
+Python 标准库 + Git，离线、与平台无关，无模型/API key，不执行 shell 字符串。
+但它会执行你显式提供的命令，并不是沙箱。凭证只证明退出码对应所表示 Git 状态，
+不证明测试质量、覆盖率或外部服务可复现。
+
+仓库：https://github.com/Amossse/agentic-dev-kit
+版本：https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.3.0
+
+---
+
 ## v0.2.0 English
 
 **Agentic Dev Kit v0.2.0 adds Range Scope for coding-agent PRs.**
@@ -87,11 +130,12 @@ uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.1.0 staged-scop
 
 Title: `Agentic Dev Kit — local evidence gates for coding-agent changes`
 
-Description: `Local evidence gates for coding-agent changes: staged Git scope, literal paths, reproducible handoffs`
+Description: `Local scope and test-evidence gates for coding-agent changes`
 
 Suggested topics: `claude-code`, `ai-agents`, `developer-tools`, `git`, `code-review`,
-`python-cli`, `agentic-workflows`.
+`python-cli`, `agentic-workflows`, `testing`, `test-automation`.
 
 Queries: Claude Code workflow, staged commit scope, coding agent handoff, monorepo
-change gate, agentic developer toolkit. Main README → capability page → pinned
-install → before/after example → issues/PRs. Copy is for manual publication only.
+change gate, test evidence receipt, stale test result, agentic developer toolkit.
+Main README → capability page → pinned install → before/after example → issues/PRs.
+Copy is for manual publication only.

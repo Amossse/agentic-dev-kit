@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 — 2026-09-21
+
+- Add Test Proof to run an explicit test command and bind its result to Git HEAD
+  plus a tracked-diff fingerprint.
+- Reject pre-existing untracked files, detect repository changes during tests,
+  atomically write bounded JSON receipts, and fail verification after later edits.
+- Add bilingual documentation, a disposable before/after demo, acceptance tests,
+  trend research, validation evidence, security boundaries and launch copy.
+
 ## 0.2.0 — 2026-09-20
 
 - Add Range Scope for read-only merge-base-to-head path gates in PR and CI flows.

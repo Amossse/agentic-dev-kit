@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentic-dev-kit"
-version = "0.2.0"
-description = "Local evidence gates for staged and committed coding-agent changes"
+version = "0.3.0"
+description = "Local scope and test-evidence gates for coding-agent changes"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
@@ -20,6 +20,7 @@ Issues = "https://github.com/Amossse/agentic-dev-kit/issues"
 [project.scripts]
 staged-scope = "agentic_devkit.staged_scope:main"
 range-scope = "agentic_devkit.range_scope:main"
+test-proof = "agentic_devkit.test_proof:main"
 
 [tool.setuptools.packages.find]
 include = ["agentic_devkit*"]

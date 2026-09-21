@@ -1,0 +1,5 @@
+[
+  {"exit": 0, "state": "passed", "step": "run"},
+  {"exit": 0, "state": "valid", "step": "verify"},
+  {"exit": 1, "state": "stale", "step": "edit_then_verify"}
+]

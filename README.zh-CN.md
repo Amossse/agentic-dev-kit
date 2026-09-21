@@ -1,7 +1,7 @@
 # Agentic Dev Kit
 
-面向 coding agent 改动交付的本地证据工具集。首个能力 **Staged Scope**
-检查下一次提交的暂存文件是否落在任务允许的范围内。
+面向 coding agent 改动交付的本地证据工具集：既检查**改了什么**，也检查当前
+状态是否仍是**测试通过时的状态**。
 
 小修复可能夹带 CI、配置或无关模块改动。这里直接读取 Git index，给出每个
 路径的判定和可用于门禁的退出码，适用于 Claude Code、Codex 和其他 CLI agent。
@@ -12,6 +12,7 @@
 | --- | --- | --- | --- |
 | [Staged Scope](capabilities/cli/staged-scope/README.zh-CN.md) | 开发者自动化 CLI | Git index + 字面路径白名单 → JSON 判定、退出码 | v0.1.0 已实现 |
 | [Range Scope](capabilities/cli/range-scope/README.zh-CN.md) | CI / PR CLI | base + head → merge-base 路径判定、退出码 | v0.2.0 已实现 |
+| [Test Proof](capabilities/cli/test-proof/README.zh-CN.md) | 测试证据 CLI | 测试命令 + Git 状态 → 可复验凭证、过期门禁 | v0.3.0 已实现 |
 
 该仓库作为后续能力的统一安装、贡献和发布入口。新增能力须有真实工程用途和
 可运行检查；现有独立项目不在本次迁移范围内。
@@ -21,7 +22,7 @@
 需要 Python 3.11+、PATH 中的 Git，无运行时 Python 依赖、无需 API key。
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.2.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.3.0
 git status --short
 git diff --cached
 staged-scope . --allow src/payments/ --allow tests/test_payments.py
@@ -54,6 +55,16 @@ range-scope . --base origin/main --head HEAD --allow src/payments/ --allow tests
 
 它按 merge-base 到候选 head 检查，不把 base 后续新增的改动算进候选分支。
 
+把真实测试结果绑定到当前 Git 状态：
+
+```bash
+test-proof run . -- python -m unittest
+test-proof verify .
+```
+
+凭证默认位于 Git 元数据目录。之后出现已跟踪改动、commit 或未跟踪文件时，
+验证会失败。输入输出和 before/after 演示见 [Test Proof](capabilities/cli/test-proof/README.zh-CN.md)。
+
 ## 实现、安全与限制
 
 通过固定 Git 命令读取 HEAD 与 index 的 NUL 分隔路径状态，关闭重命名合并，
@@ -68,6 +79,10 @@ CLI 只读、离线，不运行 hook、外部 diff/textconv、模型或用户代
 需要先审阅；检查后 index 仍可能变化，应重新检查再提交。普通 CI checkout
 没有暂存改动，需由任务明确构造 index 后才适用。详细规则见模块文档。
 
+Test Proof 只执行 `--` 后的显式参数数组，但命令会继承用户环境且不受沙箱保护。
+凭证只证明退出码和所表示 Git 状态一致，不证明测试质量或外部服务稳定。命令
+参数会进入凭证，禁止把密钥放在命令行中。
+
 MIT；[贡献指南](CONTRIBUTING.md)、[CHANGELOG](CHANGELOG.md)、
-[最新趋势与竞品](docs/research-2026-09-20.md)、[最新验证记录](docs/validation-2026-09-20.md)、
+[最新趋势与竞品](docs/research-2026-09-21.md)、[最新验证记录](docs/validation-2026-09-21.md)、
 [中英文推广文案](PROMOTION.md)。

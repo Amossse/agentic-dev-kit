@@ -9,12 +9,17 @@ Changes to matching, Git arguments, framing or exit precedence need a regression
 case in the existing acceptance check. Keep stdlib runtime dependencies and
 literal path semantics unless a measured need justifies a change.
 
+For Test Proof, include the command, expected Git state transition and a synthetic
+repository. Changes to fingerprinting, receipt validation, execution or exit
+precedence need an acceptance case. Never place credentials in command arguments.
+
 From a clone with Python 3.11+ and Git:
 
 ```bash
 python3.11 -m unittest discover -s tests -v
 python3.11 examples/staged_scope_demo.py
 python3.11 examples/range_scope_demo.py
+python3.11 examples/test_proof_demo.py
 uvx ruff check .
 uvx ruff format --check .
 uvx ty check .

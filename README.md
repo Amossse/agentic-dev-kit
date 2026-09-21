@@ -1,7 +1,7 @@
 # Agentic Dev Kit
 
-Local evidence gates for coding-agent changes. Start with a concrete question:
-**does the staged commit stay inside the task's approved files?**
+Local evidence gates for coding-agent changes. Check both **what changed** and
+whether the current state is still **the state that passed tests**.
 
 [中文](README.zh-CN.md) · [Capabilities](#capabilities) · [Contribute](CONTRIBUTING.md)
 
@@ -16,6 +16,7 @@ after Claude Code, Codex, or another CLI agent finishes.
 | --- | --- | --- | --- |
 | [Staged Scope](capabilities/cli/staged-scope/README.md) | Developer CLI | Git index + literal allow paths → per-path decision and exit code | Released in v0.1.0 |
 | [Range Scope](capabilities/cli/range-scope/README.md) | CI / PR CLI | Base + head commits → merge-base path decision and exit code | Released in v0.2.0 |
+| [Test Proof](capabilities/cli/test-proof/README.md) | Test evidence CLI | Test command + Git state → verifiable receipt and stale-state gate | Released in v0.3.0 |
 
 The main repository is the installation, contribution and release entry point.
 Each capability has its own documentation and reproducible example. Future
@@ -27,12 +28,13 @@ there are no placeholder implementations.
 Requires Python 3.11+ and Git on PATH. No runtime Python dependencies or API keys.
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.2.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.3.0
 staged-scope --version
 range-scope --version
+test-proof --version
 ```
 
-Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.2.0`.
+Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.3.0`.
 
 ## Five-minute quick start
 
@@ -75,6 +77,17 @@ range-scope . --base origin/main --head HEAD --allow src/payments/ --allow tests
 
 See the [Range Scope CI checkout and demo](capabilities/cli/range-scope/README.md).
 
+Bind a real test result to the current staged/working-tree state:
+
+```bash
+test-proof run . -- python -m unittest
+test-proof verify .
+```
+
+The receipt lives in Git metadata by default. Any subsequent tracked change,
+commit, or untracked file makes verification fail. See the
+[Test Proof before/after demo](capabilities/cli/test-proof/README.md).
+
 ## Boundaries
 
 The inspected CLI uses fixed read-only Git commands. It does not run a model,
@@ -89,14 +102,20 @@ created an edit, verify code correctness, or lock the index until commit. Review
 pre-existing staged changes and rerun after staging changes. A plain CI checkout
 has an empty index; the gate requires a job that has deliberately prepared one.
 
+Test Proof executes only the explicit argument array after `--`, but that command
+inherits the user's environment and is not sandboxed. Its receipt proves an exit
+code and represented Git-state match, not test quality or deterministic external
+services. Command arguments are recorded; never place secrets in them.
+
 ## Project and contribution
 
 MIT. [License](LICENSE) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
-· [Latest research and existing tools](docs/research-2026-09-20.md)
-· [Latest validation](docs/validation-2026-09-20.md) · [Prepared launch copy](PROMOTION.md).
+· [Latest research and existing tools](docs/research-2026-09-21.md)
+· [Latest validation](docs/validation-2026-09-21.md) · [Prepared launch copy](PROMOTION.md).
 
 Search terms: Claude Code workflow, coding agent handoff, staged Git scope,
-agentic developer toolkit, commit boundary, monorepo change gate.
+agentic developer toolkit, commit boundary, monorepo change gate, test evidence
+receipt, stale test result.
 
 Related earlier tools remain independently maintained:
 [Agent Footprint](https://github.com/Amossse/agent-footprint) for filesystem
