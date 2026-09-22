@@ -1,5 +1,44 @@
 # Prepared launch copy — not posted
 
+## v0.4.0 English
+
+**Agentic Dev Kit v0.4.0 adds Diff Budget for reviewable agent PRs.**
+
+Path scope is not enough: an agent can rewrite 5,000 lines inside an allowed
+directory. Diff Budget compares merge-base to branch head, counts files and text
+lines, and fails explicit total/per-file budgets with deterministic JSON.
+
+```bash
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.4.0 diff-budget . --base origin/main --head HEAD --max-files 10 --max-lines 400 --max-file-lines 200
+```
+
+Python stdlib + Git, offline, read-only, no model or API key. Renames count both
+endpoints and binaries fail unless explicitly allowed. Size is a review-cost proxy,
+not a code-quality score; choose limits from your repository's history and policy.
+
+Repository: https://github.com/Amossse/agentic-dev-kit
+Release: https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.4.0
+
+## v0.4.0 中文
+
+**Agentic Dev Kit v0.4.0 新增 agent PR 评审规模门禁 Diff Budget。**
+
+路径范围通过不代表改动仍可评审：agent 可能在允许目录内重写 5,000 行。Diff
+Budget 从 merge-base 检查到 branch head，统计文件数和文本变更行数，用稳定 JSON
+和退出码执行总量、单文件及二进制策略。
+
+```bash
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.4.0 diff-budget . --base origin/main --head HEAD --max-files 10 --max-lines 400 --max-file-lines 200
+```
+
+Python 标准库 + Git，离线只读，无模型/API key。rename 两端都计数，二进制默认
+拒绝。规模只是评审成本代理，不是代码质量分；阈值应来自仓库历史和团队策略。
+
+仓库：https://github.com/Amossse/agentic-dev-kit
+版本：https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.4.0
+
+---
+
 ## v0.3.0 English
 
 **Agentic Dev Kit v0.3.0 adds Test Proof for coding-agent handoffs.**
@@ -130,12 +169,14 @@ uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.1.0 staged-scop
 
 Title: `Agentic Dev Kit — local evidence gates for coding-agent changes`
 
-Description: `Local scope and test-evidence gates for coding-agent changes`
+Description: `Local scope, review-size, and test-evidence gates for coding agents`
 
 Suggested topics: `claude-code`, `ai-agents`, `developer-tools`, `git`, `code-review`,
-`python-cli`, `agentic-workflows`, `testing`, `test-automation`.
+`python-cli`, `agentic-workflows`, `testing`, `test-automation`, `pull-request-size`,
+`code-review-automation`.
 
 Queries: Claude Code workflow, staged commit scope, coding agent handoff, monorepo
-change gate, test evidence receipt, stale test result, agentic developer toolkit.
+change gate, test evidence receipt, stale test result, AI PR size gate, changed
+lines budget, agentic developer toolkit.
 Main README → capability page → pinned install → before/after example → issues/PRs.
 Copy is for manual publication only.

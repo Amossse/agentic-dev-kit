@@ -1,0 +1,5 @@
+[
+  {"changed_lines": 0, "exit": 3, "files": 0, "rejected_reasons": [], "state": "empty"},
+  {"changed_lines": 8, "exit": 1, "files": 2, "rejected_reasons": ["file_limit", "line_limit"], "state": "rejected"},
+  {"changed_lines": 2, "exit": 0, "files": 1, "rejected_reasons": [], "state": "approved"}
+]

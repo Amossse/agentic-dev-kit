@@ -1,7 +1,7 @@
 # Agentic Dev Kit
 
-Local evidence gates for coding-agent changes. Check both **what changed** and
-whether the current state is still **the state that passed tests**.
+Local evidence gates for coding-agent changes. Check **what changed**, whether it
+is still reviewable, and whether it is still **the state that passed tests**.
 
 [中文](README.zh-CN.md) · [Capabilities](#capabilities) · [Contribute](CONTRIBUTING.md)
 
@@ -17,6 +17,7 @@ after Claude Code, Codex, or another CLI agent finishes.
 | [Staged Scope](capabilities/cli/staged-scope/README.md) | Developer CLI | Git index + literal allow paths → per-path decision and exit code | Released in v0.1.0 |
 | [Range Scope](capabilities/cli/range-scope/README.md) | CI / PR CLI | Base + head commits → merge-base path decision and exit code | Released in v0.2.0 |
 | [Test Proof](capabilities/cli/test-proof/README.md) | Test evidence CLI | Test command + Git state → verifiable receipt and stale-state gate | Released in v0.3.0 |
+| [Diff Budget](capabilities/cli/diff-budget/README.md) | Review-size CLI | Merge-base diff + numeric budgets → per-file evidence and exit code | Released in v0.4.0 |
 
 The main repository is the installation, contribution and release entry point.
 Each capability has its own documentation and reproducible example. Future
@@ -28,13 +29,14 @@ there are no placeholder implementations.
 Requires Python 3.11+ and Git on PATH. No runtime Python dependencies or API keys.
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.3.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.4.0
 staged-scope --version
 range-scope --version
 test-proof --version
+diff-budget --version
 ```
 
-Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.3.0`.
+Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.4.0`.
 
 ## Five-minute quick start
 
@@ -88,6 +90,14 @@ The receipt lives in Git metadata by default. Any subsequent tracked change,
 commit, or untracked file makes verification fail. See the
 [Test Proof before/after demo](capabilities/cli/test-proof/README.md).
 
+Reject an agent branch that is too large to review under your repository policy:
+
+```bash
+diff-budget . --base origin/main --head HEAD --max-files 10 --max-lines 400
+```
+
+See the [Diff Budget fixture, binary policy, and CI example](capabilities/cli/diff-budget/README.md).
+
 ## Boundaries
 
 The inspected CLI uses fixed read-only Git commands. It does not run a model,
@@ -107,15 +117,19 @@ inherits the user's environment and is not sandboxed. Its receipt proves an exit
 code and represented Git-state match, not test quality or deterministic external
 services. Command arguments are recorded; never place secrets in them.
 
+Diff Budget treats size as a policy signal, not a quality score. Renames count
+both endpoints, binaries are rejected unless explicitly allowed, and configured
+exceptions remain a human/repository-policy decision.
+
 ## Project and contribution
 
 MIT. [License](LICENSE) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
-· [Latest research and existing tools](docs/research-2026-09-21.md)
-· [Latest validation](docs/validation-2026-09-21.md) · [Prepared launch copy](PROMOTION.md).
+· [Latest research and existing tools](docs/research-2026-09-22.md)
+· [Latest validation](docs/validation-2026-09-22.md) · [Prepared launch copy](PROMOTION.md).
 
 Search terms: Claude Code workflow, coding agent handoff, staged Git scope,
 agentic developer toolkit, commit boundary, monorepo change gate, test evidence
-receipt, stale test result.
+receipt, stale test result, pull request size gate, changed lines budget.
 
 Related earlier tools remain independently maintained:
 [Agent Footprint](https://github.com/Amossse/agent-footprint) for filesystem

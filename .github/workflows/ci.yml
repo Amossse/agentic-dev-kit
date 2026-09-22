@@ -18,6 +18,7 @@ jobs:
       - run: python examples/staged_scope_demo.py
       - run: python examples/range_scope_demo.py
       - run: python examples/test_proof_demo.py
+      - run: python examples/diff_budget_demo.py
       - run: ruff check . && ruff format --check .
       - run: ty check .
       - run: python -m build && twine check dist/*
@@ -25,3 +26,4 @@ jobs:
       - run: staged-scope --version
       - run: range-scope --version
       - run: test-proof --version
+      - run: diff-budget --version

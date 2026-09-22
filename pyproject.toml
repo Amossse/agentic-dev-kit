@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentic-dev-kit"
-version = "0.3.0"
-description = "Local scope and test-evidence gates for coding-agent changes"
+version = "0.4.0"
+description = "Local scope, review-size, and test-evidence gates for coding agents"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 authors = [{name = "Amossse"}]
 dependencies = []
-keywords = ["ai-agents", "claude-code", "git", "code-review", "developer-tools"]
+keywords = ["ai-agents", "claude-code", "git", "code-review", "pull-request-size", "developer-tools"]
 
 [project.urls]
 Homepage = "https://github.com/Amossse/agentic-dev-kit"
@@ -21,6 +21,7 @@ Issues = "https://github.com/Amossse/agentic-dev-kit/issues"
 staged-scope = "agentic_devkit.staged_scope:main"
 range-scope = "agentic_devkit.range_scope:main"
 test-proof = "agentic_devkit.test_proof:main"
+diff-budget = "agentic_devkit.diff_budget:main"
 
 [tool.setuptools.packages.find]
 include = ["agentic_devkit*"]

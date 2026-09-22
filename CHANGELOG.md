@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 — 2026-09-22
+
+- Add Diff Budget for merge-base-to-head file, total-line, per-file-line, and
+  binary-file review budgets.
+- Reuse safe revision resolution and fixed Git execution; add NUL-safe numstat
+  parsing, conservative rename accounting, stable JSON and explicit exit codes.
+- Add bilingual documentation, a disposable oversized-branch fixture, acceptance
+  tests, trend research, validation evidence, security boundaries and launch copy.
+
 ## 0.3.0 — 2026-09-21
 
 - Add Test Proof to run an explicit test command and bind its result to Git HEAD

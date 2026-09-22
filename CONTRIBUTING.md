@@ -13,6 +13,10 @@ For Test Proof, include the command, expected Git state transition and a synthet
 repository. Changes to fingerprinting, receipt validation, execution or exit
 precedence need an acceptance case. Never place credentials in command arguments.
 
+For Diff Budget, include the base/head topology, exact numeric budget and expected
+numstat. Changes to binary, rename, merge-base, count, or exit semantics need a
+synthetic history case; do not present line count as a quality metric.
+
 From a clone with Python 3.11+ and Git:
 
 ```bash
@@ -20,6 +24,7 @@ python3.11 -m unittest discover -s tests -v
 python3.11 examples/staged_scope_demo.py
 python3.11 examples/range_scope_demo.py
 python3.11 examples/test_proof_demo.py
+python3.11 examples/diff_budget_demo.py
 uvx ruff check .
 uvx ruff format --check .
 uvx ty check .
