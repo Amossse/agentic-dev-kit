@@ -1,7 +1,7 @@
 # Agentic Dev Kit
 
 面向 coding agent 改动交付的本地证据工具集：检查**改了什么**、是否仍可评审，
-以及当前状态是否仍是**测试通过时的状态**。
+当前状态是否仍是**测试通过时的状态**，并将这些证据收束为可复验交接。
 
 小修复可能夹带 CI、配置或无关模块改动。这里直接读取 Git index，给出每个
 路径的判定和可用于门禁的退出码，适用于 Claude Code、Codex 和其他 CLI agent。
@@ -14,6 +14,7 @@
 | [Range Scope](capabilities/cli/range-scope/README.zh-CN.md) | CI / PR CLI | base + head → merge-base 路径判定、退出码 | v0.2.0 已实现 |
 | [Test Proof](capabilities/cli/test-proof/README.zh-CN.md) | 测试证据 CLI | 测试命令 + Git 状态 → 可复验凭证、过期门禁 | v0.3.0 已实现 |
 | [Diff Budget](capabilities/cli/diff-budget/README.zh-CN.md) | 评审规模 CLI | merge-base diff + 数字预算 → 逐文件证据、退出码 | v0.4.0 已实现 |
+| [Handoff Proof](capabilities/cli/handoff-proof/README.zh-CN.md) | 交接证据 CLI | 任务策略 + 三项 gate → 状态绑定清单 | v0.5.0 已实现 |
 
 该仓库作为后续能力的统一安装、贡献和发布入口。新增能力须有真实工程用途和
 可运行检查；现有独立项目不在本次迁移范围内。
@@ -23,7 +24,7 @@
 需要 Python 3.11+、PATH 中的 Git，无运行时 Python 依赖、无需 API key。
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.4.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.5.0
 git status --short
 git diff --cached
 staged-scope . --allow src/payments/ --allow tests/test_payments.py
@@ -74,6 +75,16 @@ diff-budget . --base origin/main --head HEAD --max-files 10 --max-lines 400
 
 fixture、二进制策略和 CI 示例见 [Diff Budget](capabilities/cli/diff-budget/README.zh-CN.md)。
 
+把路径范围、评审预算和当前 Test Proof 收束成一份可重跑交接清单：
+
+```bash
+handoff-proof create . --task "Fix payment rounding" --base origin/main \
+  --allow src/payments/ --allow tests/ --max-files 10 --max-lines 400
+handoff-proof verify .
+```
+
+拒绝、通过和过期演示见 [Handoff Proof](capabilities/cli/handoff-proof/README.zh-CN.md)。
+
 ## 实现、安全与限制
 
 通过固定 Git 命令读取 HEAD 与 index 的 NUL 分隔路径状态，关闭重命名合并，
@@ -95,6 +106,9 @@ Test Proof 只执行 `--` 后的显式参数数组，但命令会继承用户环
 Diff Budget 把规模当成策略信号，不当成质量分。rename 两端都计数，二进制默认
 拒绝；是否允许例外仍由团队和仓库策略决定。
 
+Handoff Proof 只记录并重跑这些本地策略，不签名、不批准策略严格性、
+不校验人工 task 文本，也不替代 SLSA、in-toto、GitHub attestation 或 Owner 评审。
+
 MIT；[贡献指南](CONTRIBUTING.md)、[CHANGELOG](CHANGELOG.md)、
-[最新趋势与竞品](docs/research-2026-09-22.md)、[最新验证记录](docs/validation-2026-09-22.md)、
+[最新趋势与竞品](docs/research-2026-09-23.md)、[最新验证记录](docs/validation-2026-09-23.md)、
 [中英文推广文案](PROMOTION.md)。

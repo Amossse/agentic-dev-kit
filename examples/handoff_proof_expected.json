@@ -1,0 +1,4 @@
+{"exit": 1, "state": "rejected", "step": "wrong_scope"}
+{"exit": 0, "state": "approved", "step": "create"}
+{"exit": 0, "state": "valid", "step": "verify"}
+{"exit": 1, "state": "stale", "step": "edit_then_verify"}

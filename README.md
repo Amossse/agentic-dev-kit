@@ -18,6 +18,7 @@ after Claude Code, Codex, or another CLI agent finishes.
 | [Range Scope](capabilities/cli/range-scope/README.md) | CI / PR CLI | Base + head commits → merge-base path decision and exit code | Released in v0.2.0 |
 | [Test Proof](capabilities/cli/test-proof/README.md) | Test evidence CLI | Test command + Git state → verifiable receipt and stale-state gate | Released in v0.3.0 |
 | [Diff Budget](capabilities/cli/diff-budget/README.md) | Review-size CLI | Merge-base diff + numeric budgets → per-file evidence and exit code | Released in v0.4.0 |
+| [Handoff Proof](capabilities/cli/handoff-proof/README.md) | Handoff evidence CLI | Task policy + three existing gates → state-bound manifest | Released in v0.5.0 |
 
 The main repository is the installation, contribution and release entry point.
 Each capability has its own documentation and reproducible example. Future
@@ -29,14 +30,15 @@ there are no placeholder implementations.
 Requires Python 3.11+ and Git on PATH. No runtime Python dependencies or API keys.
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.4.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.5.0
 staged-scope --version
 range-scope --version
 test-proof --version
 diff-budget --version
+handoff-proof --version
 ```
 
-Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.4.0`.
+Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.5.0`.
 
 ## Five-minute quick start
 
@@ -98,6 +100,17 @@ diff-budget . --base origin/main --head HEAD --max-files 10 --max-lines 400
 
 See the [Diff Budget fixture, binary policy, and CI example](capabilities/cli/diff-budget/README.md).
 
+Create one re-runnable handoff from the branch scope, review budget and current
+Test Proof receipt:
+
+```bash
+handoff-proof create . --task "Fix payment rounding" --base origin/main \
+  --allow src/payments/ --allow tests/ --max-files 10 --max-lines 400
+handoff-proof verify .
+```
+
+See the [Handoff Proof rejected/valid/stale example](capabilities/cli/handoff-proof/README.md).
+
 ## Boundaries
 
 The inspected CLI uses fixed read-only Git commands. It does not run a model,
@@ -121,15 +134,20 @@ Diff Budget treats size as a policy signal, not a quality score. Renames count
 both endpoints, binaries are rejected unless explicitly allowed, and configured
 exceptions remain a human/repository-policy decision.
 
+Handoff Proof records and re-runs these local policies but does not sign them,
+approve their strictness, validate the human task statement, or replace SLSA,
+in-toto, GitHub artifact attestations, or repository-owner review.
+
 ## Project and contribution
 
 MIT. [License](LICENSE) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
-· [Latest research and existing tools](docs/research-2026-09-22.md)
-· [Latest validation](docs/validation-2026-09-22.md) · [Prepared launch copy](PROMOTION.md).
+· [Latest research and existing tools](docs/research-2026-09-23.md)
+· [Latest validation](docs/validation-2026-09-23.md) · [Prepared launch copy](PROMOTION.md).
 
 Search terms: Claude Code workflow, coding agent handoff, staged Git scope,
 agentic developer toolkit, commit boundary, monorepo change gate, test evidence
-receipt, stale test result, pull request size gate, changed lines budget.
+receipt, stale test result, pull request size gate, changed lines budget, coding
+agent handoff manifest, state-bound agent evidence.
 
 Related earlier tools remain independently maintained:
 [Agent Footprint](https://github.com/Amossse/agent-footprint) for filesystem

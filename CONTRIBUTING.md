@@ -17,6 +17,11 @@ For Diff Budget, include the base/head topology, exact numeric budget and expect
 numstat. Changes to binary, rename, merge-base, count, or exit semantics need a
 synthetic history case; do not present line count as a quality metric.
 
+For Handoff Proof, include the task policy, component-gate outcomes, current Git
+state and expected handoff result. Changes to manifest validation, write location,
+composition, or stale-state semantics need a synthetic end-to-end case. Do not
+present unsigned local JSON as authenticated provenance.
+
 From a clone with Python 3.11+ and Git:
 
 ```bash
@@ -25,6 +30,7 @@ python3.11 examples/staged_scope_demo.py
 python3.11 examples/range_scope_demo.py
 python3.11 examples/test_proof_demo.py
 python3.11 examples/diff_budget_demo.py
+python3.11 examples/handoff_proof_demo.py
 uvx ruff check .
 uvx ruff format --check .
 uvx ty check .

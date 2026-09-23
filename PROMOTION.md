@@ -1,5 +1,50 @@
 # Prepared launch copy — not posted
 
+## v0.5.0 English
+
+**Agentic Dev Kit v0.5.0 adds Handoff Proof for state-bound agent delivery.**
+
+"Changed only the intended files, stayed reviewable, tests passed" is three
+claims that can drift independently. Handoff Proof runs the toolkit's Range
+Scope, Diff Budget and Test Proof together, records the exact policy and evidence,
+then re-runs it when a reviewer or successor agent verifies the handoff.
+
+```bash
+test-proof run . -- python -m unittest
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.5.0 handoff-proof create . --task "Fix payment rounding" --base origin/main --allow src/ --allow tests/ --max-files 10 --max-lines 400
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.5.0 handoff-proof verify .
+```
+
+Python stdlib + Git, local and provider-neutral. It does not collect transcripts,
+call a model, or claim signed provenance. The task text and policy are creator
+assertions; use SLSA, in-toto or GitHub attestations when adversarial trust matters.
+
+Repository: https://github.com/Amossse/agentic-dev-kit
+Release: https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.5.0
+
+## v0.5.0 中文
+
+**Agentic Dev Kit v0.5.0 新增状态绑定的 agent 交接门禁 Handoff Proof。**
+
+“只改了预期文件、规模可评审、测试通过”是三个可独立过期的声明。
+Handoff Proof 联合执行 Range Scope、Diff Budget 和 Test Proof，记录原始
+策略与证据；评审者或后续 agent 可按同一策略复验。
+
+```bash
+test-proof run . -- python -m unittest
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.5.0 handoff-proof create . --task "Fix payment rounding" --base origin/main --allow src/ --allow tests/ --max-files 10 --max-lines 400
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.5.0 handoff-proof verify .
+```
+
+Python 标准库 + Git，本地运行且与 agent 平台无关。不收集会话、不请求模型、
+不冒充签名凭证。task 与策略由创建者声明；对抗性信任请使用 SLSA、
+in-toto 或 GitHub attestation。
+
+仓库：https://github.com/Amossse/agentic-dev-kit
+版本：https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.5.0
+
+---
+
 ## v0.4.0 English
 
 **Agentic Dev Kit v0.4.0 adds Diff Budget for reviewable agent PRs.**
@@ -169,14 +214,15 @@ uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.1.0 staged-scop
 
 Title: `Agentic Dev Kit — local evidence gates for coding-agent changes`
 
-Description: `Local scope, review-size, and test-evidence gates for coding agents`
+Description: `Local scope, review-size, test-evidence, and handoff gates for coding agents`
 
 Suggested topics: `claude-code`, `ai-agents`, `developer-tools`, `git`, `code-review`,
 `python-cli`, `agentic-workflows`, `testing`, `test-automation`, `pull-request-size`,
-`code-review-automation`.
+`code-review-automation`, `agent-handoff`, `coding-agents`.
 
 Queries: Claude Code workflow, staged commit scope, coding agent handoff, monorepo
 change gate, test evidence receipt, stale test result, AI PR size gate, changed
-lines budget, agentic developer toolkit.
+lines budget, coding agent handoff manifest, state-bound agent evidence, agentic
+developer toolkit.
 Main README → capability page → pinned install → before/after example → issues/PRs.
 Copy is for manual publication only.

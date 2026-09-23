@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0 — 2026-09-23
+
+- Add Handoff Proof to compose Range Scope, Diff Budget and Test Proof into one
+  state-bound, re-runnable coding-agent handoff manifest.
+- Reject failed component evidence, keep manifests outside the working tree,
+  atomically write approved evidence, and detect later Git-state drift.
+- Add bilingual documentation, a rejected/valid/stale fixture, acceptance tests,
+  trend research, security boundaries, validation evidence and launch copy.
+
 ## 0.4.0 — 2026-09-22
 
 - Add Diff Budget for merge-base-to-head file, total-line, per-file-line, and
