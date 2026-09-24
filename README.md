@@ -19,6 +19,7 @@ after Claude Code, Codex, or another CLI agent finishes.
 | [Test Proof](capabilities/cli/test-proof/README.md) | Test evidence CLI | Test command + Git state → verifiable receipt and stale-state gate | Released in v0.3.0 |
 | [Diff Budget](capabilities/cli/diff-budget/README.md) | Review-size CLI | Merge-base diff + numeric budgets → per-file evidence and exit code | Released in v0.4.0 |
 | [Handoff Proof](capabilities/cli/handoff-proof/README.md) | Handoff evidence CLI | Task policy + three existing gates → state-bound manifest | Released in v0.5.0 |
+| [Policy Gate](capabilities/cli/policy-gate/README.md) | PR policy CLI | Base-commit policy + branch diff → path and size decision | Released in v0.6.0 |
 
 The main repository is the installation, contribution and release entry point.
 Each capability has its own documentation and reproducible example. Future
@@ -30,15 +31,16 @@ there are no placeholder implementations.
 Requires Python 3.11+ and Git on PATH. No runtime Python dependencies or API keys.
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.5.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.6.0
 staged-scope --version
 range-scope --version
 test-proof --version
 diff-budget --version
 handoff-proof --version
+policy-gate --version
 ```
 
-Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.5.0`.
+Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.6.0`.
 
 ## Five-minute quick start
 
@@ -111,6 +113,15 @@ handoff-proof verify .
 
 See the [Handoff Proof rejected/valid/stale example](capabilities/cli/handoff-proof/README.md).
 
+Apply the repository's base-branch policy to a candidate PR:
+
+```bash
+policy-gate . --base origin/main --head HEAD
+```
+
+Add `.agentic-dev-kit/policy.json` to the base branch first. See the
+[Policy Gate schema, CI example, and base-policy fixture](capabilities/cli/policy-gate/README.md).
+
 ## Boundaries
 
 The inspected CLI uses fixed read-only Git commands. It does not run a model,
@@ -138,16 +149,20 @@ Handoff Proof records and re-runs these local policies but does not sign them,
 approve their strictness, validate the human task statement, or replace SLSA,
 in-toto, GitHub artifact attestations, or repository-owner review.
 
+Policy Gate reads policy from the caller's base commit; a trusted CI base SHA,
+required status check, and CODEOWNERS or equivalent review are needed to make it
+an owner-controlled merge gate. It does not set GitHub permissions.
+
 ## Project and contribution
 
 MIT. [License](LICENSE) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
-· [Latest research and existing tools](docs/research-2026-09-23.md)
-· [Latest validation](docs/validation-2026-09-23.md) · [Prepared launch copy](PROMOTION.md).
+· [Latest research and existing tools](docs/research-2026-09-24.md)
+· [Latest validation](docs/validation-2026-09-24.md) · [Prepared launch copy](PROMOTION.md).
 
 Search terms: Claude Code workflow, coding agent handoff, staged Git scope,
 agentic developer toolkit, commit boundary, monorepo change gate, test evidence
 receipt, stale test result, pull request size gate, changed lines budget, coding
-agent handoff manifest, state-bound agent evidence.
+agent handoff manifest, state-bound agent evidence, base-branch agent policy.
 
 Related earlier tools remain independently maintained:
 [Agent Footprint](https://github.com/Amossse/agent-footprint) for filesystem

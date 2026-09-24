@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 — 2026-09-24
+
+- Add Policy Gate: load a strict JSON policy from the selected base commit,
+  enforce path and review-size limits, and reject policy edits in the candidate.
+- Reuse Range Scope and Diff Budget with resolved commit IDs; add bilingual docs,
+  a real Git before/after fixture, acceptance tests, safety boundaries, research,
+  validation evidence, and prepared launch copy.
+
 ## 0.5.0 — 2026-09-23
 
 - Add Handoff Proof to compose Range Scope, Diff Budget and Test Proof into one

@@ -1,5 +1,45 @@
 # Prepared launch copy — not posted
 
+## v0.6.0 English
+
+**Agentic Dev Kit v0.6.0 adds Policy Gate for coding-agent PRs.**
+
+A change author can choose permissive `--allow` paths and budgets. Policy Gate
+reads `.agentic-dev-kit/policy.json` from the selected base commit, checks the
+candidate branch against it, and rejects a policy edit in the same PR. It reuses
+the toolkit's Range Scope and Diff Budget checks.
+
+```bash
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.6.0 policy-gate . --base origin/main --head HEAD
+```
+
+Python stdlib + Git, offline and read-only. Use a trusted PR base SHA, a required
+CI check, and owner review for the policy and workflow. The CLI does not verify
+GitHub identities or set branch protection.
+
+Repository: https://github.com/Amossse/agentic-dev-kit
+Release: https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.6.0
+
+## v0.6.0 中文
+
+**Agentic Dev Kit v0.6.0 新增 coding-agent PR 仓库策略门禁 Policy Gate。**
+
+改动提交者可以把 `--allow` 路径和规模阈值设得很宽。Policy Gate 从指定 base
+commit 读取 `.agentic-dev-kit/policy.json`，按 base 原有策略检查候选分支，
+并拒绝在同一 PR 中改策略。路径与规模检查复用 Range Scope 和 Diff Budget。
+
+```bash
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.6.0 policy-gate . --base origin/main --head HEAD
+```
+
+Python 标准库 + Git，离线只读。CI 应使用可信 PR base SHA、required check，
+并由 Owner 审阅策略和 workflow。CLI 不认证 GitHub 身份，也不设置分支保护。
+
+仓库：https://github.com/Amossse/agentic-dev-kit
+版本：https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.6.0
+
+---
+
 ## v0.5.0 English
 
 **Agentic Dev Kit v0.5.0 adds Handoff Proof for state-bound agent delivery.**
@@ -214,15 +254,15 @@ uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.1.0 staged-scop
 
 Title: `Agentic Dev Kit — local evidence gates for coding-agent changes`
 
-Description: `Local scope, review-size, test-evidence, and handoff gates for coding agents`
+Description: `Local scope, review-size, test-evidence, handoff, and policy gates for coding agents`
 
 Suggested topics: `claude-code`, `ai-agents`, `developer-tools`, `git`, `code-review`,
 `python-cli`, `agentic-workflows`, `testing`, `test-automation`, `pull-request-size`,
-`code-review-automation`, `agent-handoff`, `coding-agents`.
+`code-review-automation`, `agent-handoff`, `coding-agents`, `agent-policy`.
 
 Queries: Claude Code workflow, staged commit scope, coding agent handoff, monorepo
 change gate, test evidence receipt, stale test result, AI PR size gate, changed
 lines budget, coding agent handoff manifest, state-bound agent evidence, agentic
-developer toolkit.
+developer toolkit, base-branch agent policy, policy as code for AI PRs.
 Main README → capability page → pinned install → before/after example → issues/PRs.
 Copy is for manual publication only.

@@ -20,6 +20,7 @@ jobs:
       - run: python examples/test_proof_demo.py
       - run: python examples/diff_budget_demo.py
       - run: python examples/handoff_proof_demo.py
+      - run: python examples/policy_gate_demo.py
       - run: ruff check . && ruff format --check .
       - run: ty check .
       - run: python -m build && twine check dist/*
@@ -29,3 +30,4 @@ jobs:
       - run: test-proof --version
       - run: diff-budget --version
       - run: handoff-proof --version
+      - run: policy-gate --version

@@ -1,0 +1,3 @@
+{"exit": 0, "rejected_reasons": [], "state": "approved", "step": "small_fix"}
+{"exit": 1, "rejected_reasons": ["budget_exceeded"], "state": "rejected", "step": "oversized"}
+{"exit": 1, "rejected_reasons": ["policy_changed", "outside_scope", "budget_exceeded"], "state": "rejected", "step": "policy_edit"}

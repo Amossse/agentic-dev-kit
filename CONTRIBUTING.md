@@ -22,6 +22,11 @@ state and expected handoff result. Changes to manifest validation, write locatio
 composition, or stale-state semantics need a synthetic end-to-end case. Do not
 present unsigned local JSON as authenticated provenance.
 
+For Policy Gate, include a base commit containing the policy, a candidate branch,
+and expected path/size results. Changes to base-policy trust, schema parsing, or
+policy-edit handling need a synthetic history case. Do not claim the CLI itself
+authenticates repository owners.
+
 From a clone with Python 3.11+ and Git:
 
 ```bash
@@ -31,6 +36,7 @@ python3.11 examples/range_scope_demo.py
 python3.11 examples/test_proof_demo.py
 python3.11 examples/diff_budget_demo.py
 python3.11 examples/handoff_proof_demo.py
+python3.11 examples/policy_gate_demo.py
 uvx ruff check .
 uvx ruff format --check .
 uvx ty check .
