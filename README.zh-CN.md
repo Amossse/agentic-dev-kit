@@ -17,6 +17,7 @@
 | [Diff Budget](capabilities/cli/diff-budget/README.zh-CN.md) | 评审规模 CLI | merge-base diff + 数字预算 → 逐文件证据、退出码 | v0.4.0 已实现 |
 | [Handoff Proof](capabilities/cli/handoff-proof/README.zh-CN.md) | 交接证据 CLI | 任务策略 + 三项 gate → 状态绑定清单 | v0.5.0 已实现 |
 | [Policy Gate](capabilities/cli/policy-gate/README.zh-CN.md) | PR 策略 CLI | base commit 策略 + 分支 diff → 路径与规模判定 | v0.6.0 已实现 |
+| [PR Event Gate](capabilities/workflows/pr-event-gate/README.zh-CN.md) | GitHub PR 工作流 + CLI | PR 事件 SHA + checkout HEAD + base 策略 → CI 判定 | v0.7.0 已实现 |
 
 该仓库作为后续能力的统一安装、贡献和发布入口。新增能力须有真实工程用途和
 可运行检查；现有独立项目不在本次迁移范围内。
@@ -26,7 +27,7 @@
 需要 Python 3.11+、PATH 中的 Git，无运行时 Python 依赖、无需 API key。
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.6.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.7.0
 git status --short
 git diff --cached
 staged-scope . --allow src/payments/ --allow tests/test_payments.py
@@ -96,6 +97,10 @@ policy-gate . --base origin/main --head HEAD
 先把 `.agentic-dev-kit/policy.json` 提交到 base 分支；schema、CI 示例与演示见
 [Policy Gate](capabilities/cli/policy-gate/README.zh-CN.md)。
 
+将 GitHub PR 事件 SHA 与 checkout HEAD 绑定，并复用 base 策略时，使用
+[PR Event Gate](capabilities/workflows/pr-event-gate/README.zh-CN.md) 的
+caller workflow；确认结果后可将其设为 required check。
+
 ## 实现、安全与限制
 
 通过固定 Git 命令读取 HEAD 与 index 的 NUL 分隔路径状态，关闭重命名合并，
@@ -123,6 +128,10 @@ Handoff Proof 只记录并重跑这些本地策略，不签名、不批准策略
 Policy Gate 从调用者指定的 base commit 读取策略。要形成 Owner 控制的合并门禁，
 CI 需使用可信 base SHA，并设置 required check 和 CODEOWNERS 或等效审阅。
 
+PR Event Gate 校验事件字段与 checkout 一致性，但无法认证本地提供的事件文件，
+也无法配置 GitHub 分支保护。复用 workflow 只用 `pull_request` 和只读权限，
+不运行候选代码或索取 secrets；使用前仍需审阅版本化依赖。
+
 MIT；[贡献指南](CONTRIBUTING.md)、[CHANGELOG](CHANGELOG.md)、
-[最新趋势与竞品](docs/research-2026-09-24.md)、[最新验证记录](docs/validation-2026-09-24.md)、
+[最新趋势与竞品](docs/research-2026-09-25.md)、[最新验证记录](docs/validation-2026-09-25.md)、
 [中英文推广文案](PROMOTION.md)。

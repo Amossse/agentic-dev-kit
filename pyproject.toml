@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentic-dev-kit"
-version = "0.6.0"
-description = "Local scope, review-size, test-evidence, handoff, and policy gates for coding agents"
+version = "0.7.0"
+description = "Local scope, review-size, test-evidence, handoff, and PR policy gates for coding agents"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 authors = [{name = "Amossse"}]
 dependencies = []
-keywords = ["ai-agents", "claude-code", "git", "code-review", "agent-handoff", "developer-tools"]
+keywords = ["ai-agents", "claude-code", "git", "code-review", "agent-handoff", "github-actions", "developer-tools"]
 
 [project.urls]
 Homepage = "https://github.com/Amossse/agentic-dev-kit"
@@ -24,6 +24,7 @@ test-proof = "agentic_devkit.test_proof:main"
 diff-budget = "agentic_devkit.diff_budget:main"
 handoff-proof = "agentic_devkit.handoff_proof:main"
 policy-gate = "agentic_devkit.policy_gate:main"
+pr-event-gate = "agentic_devkit.pr_event_gate:main"
 
 [tool.setuptools.packages.find]
 include = ["agentic_devkit*"]

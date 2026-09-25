@@ -1,5 +1,47 @@
 # Prepared launch copy — not posted
 
+## v0.7.0 English
+
+**Agentic Dev Kit v0.7.0 adds PR Event Gate.**
+
+Your coding-agent policy check should inspect the exact PR head against the
+policy already on its base branch—not a stale ref or GitHub's synthetic merge
+commit. PR Event Gate validates GitHub's `pull_request` base/head SHAs, rejects a
+checkout mismatch, and runs the existing Policy Gate. A reusable, read-only
+GitHub workflow and a three-case synthetic Git demo are included.
+
+```bash
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.7.0 pr-event-gate .
+```
+
+Use the versioned caller recipe, make its check required, and review workflow
+and dependency pins. The CLI cannot authenticate a locally supplied event file
+or configure branch protection; no candidate code or secrets are needed.
+
+Repository: https://github.com/Amossse/agentic-dev-kit
+Release: https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.7.0
+
+## v0.7.0 中文
+
+**Agentic Dev Kit v0.7.0 新增 PR Event Gate。**
+
+Agent PR 门禁应检查事件指定的真实 head，并按 base 分支已有策略判定；不该误用
+旧 ref 或 GitHub 默认合并提交。PR Event Gate 校验 `pull_request` 的 base/head
+SHA 与当前 checkout，随后执行既有 Policy Gate。附可复用只读 GitHub workflow
+和三种结果的合成 Git 演示。
+
+```bash
+uvx --from git+https://github.com/Amossse/agentic-dev-kit.git@v0.7.0 pr-event-gate .
+```
+
+使用版本化 caller，设为 required check，并审阅 workflow 与依赖版本。
+CLI 无法认证本地事件文件，也不会配置分支保护；不需要执行候选代码或 secrets。
+
+仓库：https://github.com/Amossse/agentic-dev-kit
+版本：https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.7.0
+
+---
+
 ## v0.6.0 English
 
 **Agentic Dev Kit v0.6.0 adds Policy Gate for coding-agent PRs.**

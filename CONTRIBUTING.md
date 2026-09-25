@@ -27,6 +27,11 @@ and expected path/size results. Changes to base-policy trust, schema parsing, or
 policy-edit handling need a synthetic history case. Do not claim the CLI itself
 authenticates repository owners.
 
+For PR Event Gate, include a synthetic `pull_request` event, base/head commits,
+the checked-out HEAD, and the expected exit code. Changes to event parsing,
+workflow permissions, or checkout semantics require a regression case. Never
+use `pull_request_target` with untrusted checkout and secrets in this recipe.
+
 From a clone with Python 3.11+ and Git:
 
 ```bash
@@ -37,6 +42,7 @@ python3.11 examples/test_proof_demo.py
 python3.11 examples/diff_budget_demo.py
 python3.11 examples/handoff_proof_demo.py
 python3.11 examples/policy_gate_demo.py
+python3.11 examples/pr_event_gate_demo.py
 uvx ruff check .
 uvx ruff format --check .
 uvx ty check .

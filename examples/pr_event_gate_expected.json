@@ -1,0 +1,5 @@
+[
+  {"exit": 0, "rejected_reasons": [], "state": "approved", "step": "small_fix"},
+  {"exit": 2, "rejected_reasons": [], "state": "error", "step": "wrong_checkout"},
+  {"exit": 1, "rejected_reasons": ["outside_scope"], "state": "rejected", "step": "outside_scope"}
+]

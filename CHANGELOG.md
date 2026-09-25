@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0 — 2026-09-25
+
+- Add PR Event Gate, a GitHub `pull_request` event-to-policy CLI and reusable
+  workflow that binds checked-out HEAD to event head SHA before reusing Policy Gate.
+- Reject unsupported events, malformed/oversized JSON and SHA mismatch; include
+  synthetic Git acceptance tests, bilingual workflow docs, caller example,
+  security boundaries, research, validation evidence and unposted launch copy.
+
 ## 0.6.0 — 2026-09-24
 
 - Add Policy Gate: load a strict JSON policy from the selected base commit,

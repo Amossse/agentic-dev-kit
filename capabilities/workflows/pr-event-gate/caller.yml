@@ -1,0 +1,9 @@
+name: Agent PR policy
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+permissions:
+  contents: read
+jobs:
+  policy:
+    uses: Amossse/agentic-dev-kit/.github/workflows/pr-event-gate.yml@v0.7.0
