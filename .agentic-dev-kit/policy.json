@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "allow": ["tests/", "docs/", ".agentic-dev-kit/"],
-  "max_files": 10,
-  "max_lines": 1000,
-  "max_file_lines": 1000,
+  "allow": ["tests/"],
+  "max_files": 1,
+  "max_lines": 30,
+  "max_file_lines": 30,
   "allow_binary": false
 }
