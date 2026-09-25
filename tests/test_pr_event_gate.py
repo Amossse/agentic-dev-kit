@@ -8,10 +8,17 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from agentic_devkit.pr_event_gate import event_sha
+from agentic_devkit.staged_scope import InputError
+
 PROJECT = Path(__file__).resolve().parents[1]
 
 
 class PullRequestEventGateTest(unittest.TestCase):
+    def test_nested_event_shape_is_rejected(self):
+        with self.assertRaises(InputError):
+            event_sha({"pull_request": {"base": []}}, "base")
+
     def test_event_binding_and_policy(self):
         with tempfile.TemporaryDirectory(prefix="pr-event-gate-test-") as directory:
             repo = Path(directory) / "repo"
