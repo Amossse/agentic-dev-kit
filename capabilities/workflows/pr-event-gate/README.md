@@ -20,7 +20,11 @@ executes the check, and a reusable workflow wires it into `pull_request`.
    on the protected base branch.
 2. Copy [`caller.yml`](caller.yml) into your repository's
    `.github/workflows/agent-pr-policy.yml`, or use its `workflow_call` job.
-3. Open a PR. Make `policy` a required status check after reviewing its result.
+3. Open a PR. Make the job's actual check context a required status check after
+   reviewing its result.
+
+Use [Required Check Audit](../../cli/required-check-audit/README.md) to verify
+the exact check context after configuring branch protection.
 
 The caller invokes this toolkit's versioned
 [`pr-event-gate.yml`](../../../.github/workflows/pr-event-gate.yml), which installs

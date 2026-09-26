@@ -18,6 +18,7 @@
 | [Handoff Proof](capabilities/cli/handoff-proof/README.zh-CN.md) | 交接证据 CLI | 任务策略 + 三项 gate → 状态绑定清单 | v0.5.0 已实现 |
 | [Policy Gate](capabilities/cli/policy-gate/README.zh-CN.md) | PR 策略 CLI | base commit 策略 + 分支 diff → 路径与规模判定 | v0.6.0 已实现 |
 | [PR Event Gate](capabilities/workflows/pr-event-gate/README.zh-CN.md) | GitHub PR 工作流 + CLI | PR 事件 SHA + checkout HEAD + base 策略 → CI 判定 | v0.7.0 已实现 |
+| [Required Check Audit](capabilities/cli/required-check-audit/README.zh-CN.md) | GitHub 配置核对 CLI | 分支保护 + 检查名称 → 必过项判定 | v0.8.0 已实现 |
 
 该仓库作为后续能力的统一安装、贡献和发布入口。新增能力须有真实工程用途和
 可运行检查；现有独立项目不在本次迁移范围内。
@@ -27,7 +28,7 @@
 需要 Python 3.11+、PATH 中的 Git，无运行时 Python 依赖、无需 API key。
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.7.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.8.0
 git status --short
 git diff --cached
 staged-scope . --allow src/payments/ --allow tests/test_payments.py
@@ -101,6 +102,10 @@ policy-gate . --base origin/main --head HEAD
 [PR Event Gate](capabilities/workflows/pr-event-gate/README.zh-CN.md) 的
 caller workflow；确认结果后可将其设为 required check。
 
+设置分支保护后，可运行 `required-check-audit OWNER/REPO --branch main --check policy`
+核对同名检查是否真的被要求通过。离线示例见
+[Required Check Audit](capabilities/cli/required-check-audit/README.zh-CN.md)。
+
 ## 实现、安全与限制
 
 通过固定 Git 命令读取 HEAD 与 index 的 NUL 分隔路径状态，关闭重命名合并，
@@ -132,6 +137,9 @@ PR Event Gate 校验事件字段与 checkout 一致性，但无法认证本地�
 也无法配置 GitHub 分支保护。复用 workflow 只用 `pull_request` 和只读权限，
 不运行候选代码或索取 secrets；使用前仍需审阅版本化依赖。
 
+Required Check Audit 仅查询分支保护；不覆盖 ruleset、绕过权限、检查来源 App
+或工作流执行情况。实时查询需要已认证的 `gh`，不会修改设置。
+
 MIT；[贡献指南](CONTRIBUTING.md)、[CHANGELOG](CHANGELOG.md)、
-[最新趋势与竞品](docs/research-2026-09-25.md)、[最新验证记录](docs/validation-2026-09-25.md)、
+[最新趋势与竞品](docs/research-2026-09-26.md)、[最新验证记录](docs/validation-2026-09-26.md)、
 [中英文推广文案](PROMOTION.md)。

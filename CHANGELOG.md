@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0 — 2026-09-26
+
+- Add Required Check Audit, a read-only GitHub branch-protection check for the
+  exact PR Event Gate status context, with offline snapshots and explicit 404
+  uncertainty.
+- Document ruleset and bypass limits, include bilingual quick starts, fixtures,
+  acceptance test, research and validation records, and unposted launch copy.
+
 ## 0.7.0 — 2026-09-25
 
 - Add PR Event Gate, a GitHub `pull_request` event-to-policy CLI and reusable

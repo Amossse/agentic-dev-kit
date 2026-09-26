@@ -21,6 +21,7 @@ after Claude Code, Codex, or another CLI agent finishes.
 | [Handoff Proof](capabilities/cli/handoff-proof/README.md) | Handoff evidence CLI | Task policy + three existing gates → state-bound manifest | Released in v0.5.0 |
 | [Policy Gate](capabilities/cli/policy-gate/README.md) | PR policy CLI | Base-commit policy + branch diff → path and size decision | Released in v0.6.0 |
 | [PR Event Gate](capabilities/workflows/pr-event-gate/README.md) | GitHub PR workflow + CLI | PR event SHAs + checked-out head + base policy → CI decision | Released in v0.7.0 |
+| [Required Check Audit](capabilities/cli/required-check-audit/README.md) | GitHub configuration CLI | Branch protection + exact check name → required-check decision | Released in v0.8.0 |
 
 The main repository is the installation, contribution and release entry point.
 Each capability has its own documentation and reproducible example. Future
@@ -32,7 +33,7 @@ there are no placeholder implementations.
 Requires Python 3.11+ and Git on PATH. No runtime Python dependencies or API keys.
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.7.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.8.0
 staged-scope --version
 range-scope --version
 test-proof --version
@@ -40,9 +41,10 @@ diff-budget --version
 handoff-proof --version
 policy-gate --version
 pr-event-gate --version
+required-check-audit --version
 ```
 
-Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.7.0`.
+Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.8.0`.
 
 ## Five-minute quick start
 
@@ -128,6 +130,10 @@ To bind a PR check to GitHub's event SHAs and the exact checked-out head, use
 the [PR Event Gate caller workflow](capabilities/workflows/pr-event-gate/README.md).
 It reuses Policy Gate's base policy and can be made a required check.
 
+After configuring branch protection, verify that GitHub actually requires the
+exact check context: `required-check-audit OWNER/REPO --branch main --check policy`.
+See the [offline before/after fixture](capabilities/cli/required-check-audit/README.md).
+
 ## Boundaries
 
 The inspected CLI uses fixed read-only Git commands. It does not run a model,
@@ -160,6 +166,10 @@ authenticate a locally supplied event file or configure GitHub branch protection
 The reusable workflow uses `pull_request`, read-only permissions, and does not
 run candidate code or request secrets. Review workflow/action versions before use.
 
+Required Check Audit reads branch protection only; it does not evaluate rulesets,
+bypass actors, app identity, or whether a check ran. It needs authenticated `gh`
+for live GitHub queries and never changes settings.
+
 Policy Gate reads policy from the caller's base commit; a trusted CI base SHA,
 required status check, and CODEOWNERS or equivalent review are needed to make it
 an owner-controlled merge gate. It does not set GitHub permissions.
@@ -167,14 +177,15 @@ an owner-controlled merge gate. It does not set GitHub permissions.
 ## Project and contribution
 
 MIT. [License](LICENSE) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
-· [Latest research and existing tools](docs/research-2026-09-25.md)
-· [Latest validation](docs/validation-2026-09-25.md) · [Prepared launch copy](PROMOTION.md).
+· [Latest research and existing tools](docs/research-2026-09-26.md)
+· [Latest validation](docs/validation-2026-09-26.md) · [Prepared launch copy](PROMOTION.md).
 
 Search terms: Claude Code workflow, coding agent handoff, staged Git scope,
 agentic developer toolkit, commit boundary, monorepo change gate, test evidence
 receipt, stale test result, pull request size gate, changed lines budget, coding
 agent handoff manifest, state-bound agent evidence, base-branch agent policy,
 trusted pull request event gate.
+Also: GitHub required status check audit, branch protection check, agent PR merge gate.
 
 Related earlier tools remain independently maintained:
 [Agent Footprint](https://github.com/Amossse/agent-footprint) for filesystem

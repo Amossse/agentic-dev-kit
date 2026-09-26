@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentic-dev-kit"
-version = "0.7.0"
+version = "0.8.0"
 description = "Local scope, review-size, test-evidence, handoff, and PR policy gates for coding agents"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -25,6 +25,7 @@ diff-budget = "agentic_devkit.diff_budget:main"
 handoff-proof = "agentic_devkit.handoff_proof:main"
 policy-gate = "agentic_devkit.policy_gate:main"
 pr-event-gate = "agentic_devkit.pr_event_gate:main"
+required-check-audit = "agentic_devkit.required_check_audit:main"
 
 [tool.setuptools.packages.find]
 include = ["agentic_devkit*"]

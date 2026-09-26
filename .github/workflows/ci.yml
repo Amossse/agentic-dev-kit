@@ -33,3 +33,4 @@ jobs:
       - run: handoff-proof --version
       - run: policy-gate --version
       - run: pr-event-gate --version
+      - run: required-check-audit --version

@@ -1,5 +1,37 @@
 # Prepared launch copy — not posted
 
+## v0.8.0 English
+
+**Agentic Dev Kit v0.8.0 adds Required Check Audit.**
+
+The PR Event Gate can pass while the repository still permits merging without
+it. This small read-only CLI checks whether GitHub branch protection requires
+the exact check name you see on a PR. It distinguishes a missing check from an
+API-access error and includes protected/missing offline fixtures.
+
+```bash
+required-check-audit OWNER/REPO --branch main --check 'policy'
+```
+
+It reads branch protection, not rulesets or bypass actors, and changes no
+settings. Repository: https://github.com/Amossse/agentic-dev-kit
+Release: https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.8.0
+
+## v0.8.0 中文
+
+**Agentic Dev Kit v0.8.0 新增 Required Check Audit。**
+
+PR 检查跑绿了，仓库仍可能允许绕过它合并。这个只读命令核对 GitHub 分支保护是否要求指定检查通过。找不到同名检查和 API 无法访问会返回不同退出码；仓库里也有离线示例。
+
+```bash
+required-check-audit OWNER/REPO --branch main --check 'policy'
+```
+
+它不检查 ruleset 或绕过权限，也不修改设置。仓库：https://github.com/Amossse/agentic-dev-kit
+版本：https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.8.0
+
+---
+
 ## v0.7.0 English
 
 **Agentic Dev Kit v0.7.0 adds PR Event Gate.**

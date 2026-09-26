@@ -16,7 +16,10 @@ Policy Gate。这是可运行的 CLI 加可复用 workflow，不只是提示词�
    `.agentic-dev-kit/policy.json`。
 2. 将 [`caller.yml`](caller.yml) 复制到你的仓库
    `.github/workflows/agent-pr-policy.yml`。
-3. 开 PR，确认结果后将 `policy` 设为 required check。
+3. 开 PR，确认结果后将页面显示的实际检查名称设为 required check。
+
+设置后可用 [Required Check Audit](../../cli/required-check-audit/README.zh-CN.md)
+核对该检查是否真的被要求通过。
 
 Caller 调用本仓库的版本化
 [`pr-event-gate.yml`](../../../.github/workflows/pr-event-gate.yml)：安装已发布
