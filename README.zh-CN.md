@@ -19,16 +19,18 @@
 | [Policy Gate](capabilities/cli/policy-gate/README.zh-CN.md) | PR 策略 CLI | base commit 策略 + 分支 diff → 路径与规模判定 | v0.6.0 已实现 |
 | [PR Event Gate](capabilities/workflows/pr-event-gate/README.zh-CN.md) | GitHub PR 工作流 + CLI | PR 事件 SHA + checkout HEAD + base 策略 → CI 判定 | v0.7.0 已实现 |
 | [Required Check Audit](capabilities/cli/required-check-audit/README.zh-CN.md) | GitHub 配置核对 CLI | 分支保护 + 检查名称 → 必过项判定 | v0.8.0 已实现 |
+| [Release Asset Audit](capabilities/cli/release-asset-audit/README.zh-CN.md) | 发布文件核对 CLI | 本地文件 + GitHub Release 摘要 → 一致性判定 | v0.9.0 已实现 |
 
 该仓库作为后续能力的统一安装、贡献和发布入口。新增能力须有真实工程用途和
 可运行检查；现有独立项目不在本次迁移范围内。
 
 ## 安装与五分钟开始
 
-需要 Python 3.11+、PATH 中的 Git，无运行时 Python 依赖、无需 API key。
+需要 Python 3.11+、PATH 中的 Git，无运行时 Python 依赖。两个 GitHub 审计
+CLI 另需已登录的 `gh`；本地门禁无需 API 访问。
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.8.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.9.0
 git status --short
 git diff --cached
 staged-scope . --allow src/payments/ --allow tests/test_payments.py
@@ -106,6 +108,10 @@ caller workflow；确认结果后可将其设为 required check。
 核对同名检查是否真的被要求通过。离线示例见
 [Required Check Audit](capabilities/cli/required-check-audit/README.zh-CN.md)。
 
+发布 GitHub Release 后，用 `release-asset-audit OWNER/REPO --tag v1.2.3 dist/package-1.2.3.whl`
+核对已上传附件和本地构建文件；真实调用与离线示例见
+[Release Asset Audit](capabilities/cli/release-asset-audit/README.zh-CN.md)。
+
 ## 实现、安全与限制
 
 通过固定 Git 命令读取 HEAD 与 index 的 NUL 分隔路径状态，关闭重命名合并，
@@ -140,6 +146,9 @@ PR Event Gate 校验事件字段与 checkout 一致性，但无法认证本地�
 Required Check Audit 仅查询分支保护；不覆盖 ruleset、绕过权限、检查来源 App
 或工作流执行情况。实时查询需要已认证的 `gh`，不会修改设置。
 
+Release Asset Audit 只读取 GitHub Release 和显式传入的本地文件，不上传内容。
+摘要匹配不证明构建来源、签名、CI 测试范围或其他未指定附件的完整性。
+
 MIT；[贡献指南](CONTRIBUTING.md)、[CHANGELOG](CHANGELOG.md)、
-[最新趋势与竞品](docs/research-2026-09-26.md)、[最新验证记录](docs/validation-2026-09-26.md)、
+[最新趋势与竞品](docs/research-2026-09-27.md)、[最新验证记录](docs/validation-2026-09-27.md)、
 [中英文推广文案](PROMOTION.md)。

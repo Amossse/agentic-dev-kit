@@ -1,5 +1,38 @@
 # Prepared launch copy — not posted
 
+## v0.9.0 English
+
+**Agentic Dev Kit v0.9.0 adds Release Asset Audit.**
+
+A successful build does not prove that the same files reached a GitHub Release.
+This read-only CLI compares each selected local file with the release asset's
+name, size, and SHA-256 digest. It fails on missing or mismatched assets and
+provides an offline before/after fixture.
+
+```bash
+release-asset-audit OWNER/REPO --tag v1.2.3 dist/package-1.2.3.whl
+```
+
+It verifies selected bytes, not signatures, build provenance, or CI coverage.
+Repository: https://github.com/Amossse/agentic-dev-kit
+Release: https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.9.0
+
+## v0.9.0 中文
+
+**Agentic Dev Kit v0.9.0 新增 Release Asset Audit。**
+
+构建成功后，还要确认上传到 GitHub Release 的文件没有缺失或变样。这个只读命令按名称、大小和 SHA-256 摘要逐个核对指定附件；仓库附带匹配与不匹配两种离线示例。
+
+```bash
+release-asset-audit OWNER/REPO --tag v1.2.3 dist/package-1.2.3.whl
+```
+
+它只核对选中的文件，不证明签名、构建来源或 CI 测试范围。
+仓库：https://github.com/Amossse/agentic-dev-kit
+版本：https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.9.0
+
+---
+
 ## v0.8.0 English
 
 **Agentic Dev Kit v0.8.0 adds Required Check Audit.**

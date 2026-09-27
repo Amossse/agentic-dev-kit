@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.0 — 2026-09-27
+
+- Add Release Asset Audit to compare selected local files with published
+  GitHub Release asset names, sizes, and SHA-256 digests.
+- Include a real v0.8.0 release probe, synthetic match/mismatch fixtures,
+  bilingual usage and safety docs, validation evidence, research, and unposted
+  launch copy.
+
 ## 0.8.0 — 2026-09-26
 
 - Add Required Check Audit, a read-only GitHub branch-protection check for the

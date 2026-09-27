@@ -22,6 +22,7 @@ after Claude Code, Codex, or another CLI agent finishes.
 | [Policy Gate](capabilities/cli/policy-gate/README.md) | PR policy CLI | Base-commit policy + branch diff → path and size decision | Released in v0.6.0 |
 | [PR Event Gate](capabilities/workflows/pr-event-gate/README.md) | GitHub PR workflow + CLI | PR event SHAs + checked-out head + base policy → CI decision | Released in v0.7.0 |
 | [Required Check Audit](capabilities/cli/required-check-audit/README.md) | GitHub configuration CLI | Branch protection + exact check name → required-check decision | Released in v0.8.0 |
+| [Release Asset Audit](capabilities/cli/release-asset-audit/README.md) | Release verification CLI | Local files + published Release digests → byte-match decision | Released in v0.9.0 |
 
 The main repository is the installation, contribution and release entry point.
 Each capability has its own documentation and reproducible example. Future
@@ -30,10 +31,11 @@ there are no placeholder implementations.
 
 ## Install
 
-Requires Python 3.11+ and Git on PATH. No runtime Python dependencies or API keys.
+Requires Python 3.11+ and Git on PATH. No runtime Python dependencies. The two
+GitHub audit CLIs also need authenticated `gh`; local gates need no API access.
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.8.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.9.0
 staged-scope --version
 range-scope --version
 test-proof --version
@@ -42,9 +44,10 @@ handoff-proof --version
 policy-gate --version
 pr-event-gate --version
 required-check-audit --version
+release-asset-audit --version
 ```
 
-Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.8.0`.
+Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.9.0`.
 
 ## Five-minute quick start
 
@@ -134,6 +137,15 @@ After configuring branch protection, verify that GitHub actually requires the
 exact check context: `required-check-audit OWNER/REPO --branch main --check policy`.
 See the [offline before/after fixture](capabilities/cli/required-check-audit/README.md).
 
+After publishing a GitHub Release, compare its uploaded assets with the local
+files you built:
+
+```bash
+release-asset-audit OWNER/REPO --tag v1.2.3 dist/package-1.2.3.whl
+```
+
+See the [live and offline Release Asset Audit examples](capabilities/cli/release-asset-audit/README.md).
+
 ## Boundaries
 
 The inspected CLI uses fixed read-only Git commands. It does not run a model,
@@ -170,6 +182,10 @@ Required Check Audit reads branch protection only; it does not evaluate rulesets
 bypass actors, app identity, or whether a check ran. It needs authenticated `gh`
 for live GitHub queries and never changes settings.
 
+Release Asset Audit reads a GitHub Release and explicitly named local files;
+it does not upload content or prove build provenance, signatures, CI coverage,
+or the integrity of unselected assets. Live use needs authenticated `gh`.
+
 Policy Gate reads policy from the caller's base commit; a trusted CI base SHA,
 required status check, and CODEOWNERS or equivalent review are needed to make it
 an owner-controlled merge gate. It does not set GitHub permissions.
@@ -177,8 +193,8 @@ an owner-controlled merge gate. It does not set GitHub permissions.
 ## Project and contribution
 
 MIT. [License](LICENSE) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
-· [Latest research and existing tools](docs/research-2026-09-26.md)
-· [Latest validation](docs/validation-2026-09-26.md) · [Prepared launch copy](PROMOTION.md).
+· [Latest research and existing tools](docs/research-2026-09-27.md)
+· [Latest validation](docs/validation-2026-09-27.md) · [Prepared launch copy](PROMOTION.md).
 
 Search terms: Claude Code workflow, coding agent handoff, staged Git scope,
 agentic developer toolkit, commit boundary, monorepo change gate, test evidence
@@ -186,6 +202,7 @@ receipt, stale test result, pull request size gate, changed lines budget, coding
 agent handoff manifest, state-bound agent evidence, base-branch agent policy,
 trusted pull request event gate.
 Also: GitHub required status check audit, branch protection check, agent PR merge gate.
+GitHub Release SHA-256 audit, published wheel digest check, artifact integrity.
 
 Related earlier tools remain independently maintained:
 [Agent Footprint](https://github.com/Amossse/agent-footprint) for filesystem
