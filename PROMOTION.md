@@ -1,5 +1,39 @@
 # Prepared launch copy — not posted
 
+## v0.10.0 English
+
+**Agentic Dev Kit v0.10.0 adds Workflow Run Audit.**
+
+A green GitHub Actions run only helps if it belongs to the commit you are
+shipping. This read-only CLI checks one run ID against the expected full commit
+SHA, workflow file, event, and successful conclusion. It is useful after a
+coding-agent handoff or before a release.
+
+```bash
+workflow-run-audit OWNER/REPO --run 123456789 --sha FULL_COMMIT_SHA \
+  --workflow .github/workflows/ci.yml --event push
+```
+
+It does not prove test coverage, required-check enforcement, or artifact
+provenance. Repository: https://github.com/Amossse/agentic-dev-kit
+Release: https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.10.0
+
+## v0.10.0 中文
+
+**Agentic Dev Kit v0.10.0 新增 Workflow Run Audit。**
+
+交付前别只看 CI 绿灯，还要确认这条记录跑的就是当前提交。这个只读命令按运行 ID 核对完整提交 SHA、workflow 文件、事件和成功结论，适合 agent 交接或发布前检查。
+
+```bash
+workflow-run-audit OWNER/REPO --run 123456789 --sha FULL_COMMIT_SHA \
+  --workflow .github/workflows/ci.yml --event push
+```
+
+它不证明测试覆盖范围、必过项设置或构建来源。仓库：https://github.com/Amossse/agentic-dev-kit
+版本：https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.10.0
+
+---
+
 ## v0.9.0 English
 
 **Agentic Dev Kit v0.9.0 adds Release Asset Audit.**

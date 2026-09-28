@@ -20,17 +20,18 @@
 | [PR Event Gate](capabilities/workflows/pr-event-gate/README.zh-CN.md) | GitHub PR 工作流 + CLI | PR 事件 SHA + checkout HEAD + base 策略 → CI 判定 | v0.7.0 已实现 |
 | [Required Check Audit](capabilities/cli/required-check-audit/README.zh-CN.md) | GitHub 配置核对 CLI | 分支保护 + 检查名称 → 必过项判定 | v0.8.0 已实现 |
 | [Release Asset Audit](capabilities/cli/release-asset-audit/README.zh-CN.md) | 发布文件核对 CLI | 本地文件 + GitHub Release 摘要 → 一致性判定 | v0.9.0 已实现 |
+| [Workflow Run Audit](capabilities/cli/workflow-run-audit/README.zh-CN.md) | CI 证据 CLI | 运行 ID + 预期提交/workflow/事件 → 精确运行判定 | v0.10.0 已实现 |
 
 该仓库作为后续能力的统一安装、贡献和发布入口。新增能力须有真实工程用途和
 可运行检查；现有独立项目不在本次迁移范围内。
 
 ## 安装与五分钟开始
 
-需要 Python 3.11+、PATH 中的 Git，无运行时 Python 依赖。两个 GitHub 审计
+需要 Python 3.11+、PATH 中的 Git，无运行时 Python 依赖。三个 GitHub 审计
 CLI 另需已登录的 `gh`；本地门禁无需 API 访问。
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.9.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.10.0
 git status --short
 git diff --cached
 staged-scope . --allow src/payments/ --allow tests/test_payments.py
@@ -112,6 +113,15 @@ caller workflow；确认结果后可将其设为 required check。
 核对已上传附件和本地构建文件；真实调用与离线示例见
 [Release Asset Audit](capabilities/cli/release-asset-audit/README.zh-CN.md)。
 
+要确认一条绿色 CI 记录属于待交付的提交，可运行：
+
+```bash
+workflow-run-audit OWNER/REPO --run 123456789 --sha FULL_COMMIT_SHA \
+  --workflow .github/workflows/ci.yml --event push
+```
+
+公开实例与离线样例见 [Workflow Run Audit](capabilities/cli/workflow-run-audit/README.zh-CN.md)。
+
 ## 实现、安全与限制
 
 通过固定 Git 命令读取 HEAD 与 index 的 NUL 分隔路径状态，关闭重命名合并，
@@ -149,6 +159,9 @@ Required Check Audit 仅查询分支保护；不覆盖 ruleset、绕过权限、
 Release Asset Audit 只读取 GitHub Release 和显式传入的本地文件，不上传内容。
 摘要匹配不证明构建来源、签名、CI 测试范围或其他未指定附件的完整性。
 
+Workflow Run Audit 只读取单条 GitHub Actions 运行记录。成功不证明具体执行了哪些
+job、检查是否必需，也不证明附件是测试过的构建文件。离线快照未经认证。
+
 MIT；[贡献指南](CONTRIBUTING.md)、[CHANGELOG](CHANGELOG.md)、
-[最新趋势与竞品](docs/research-2026-09-27.md)、[最新验证记录](docs/validation-2026-09-27.md)、
+[最新趋势与竞品](docs/research-2026-09-28.md)、[最新验证记录](docs/validation-2026-09-28.md)、
 [中英文推广文案](PROMOTION.md)。

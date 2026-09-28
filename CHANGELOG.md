@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.0 — 2026-09-28
+
+- Add Workflow Run Audit to verify one GitHub Actions run against an exact
+  commit, workflow file, event, and successful conclusion.
+- Include a public-run probe, offline JSON fixture, mismatch and pending tests,
+  bilingual docs, research, validation evidence, and unposted launch copy.
+
 ## 0.9.0 — 2026-09-27
 
 - Add Release Asset Audit to compare selected local files with published
