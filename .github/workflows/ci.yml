@@ -36,3 +36,10 @@ jobs:
       - run: required-check-audit --version
       - run: release-asset-audit --version
       - run: workflow-run-audit --version
+      - run: artifact-run-audit --version
+      - if: matrix.python == '3.11'
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: agentic-dev-kit-dist
+          path: dist/*
+          if-no-files-found: error

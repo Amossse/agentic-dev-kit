@@ -1,0 +1,10 @@
+{
+  "id": 12345,
+  "name": "agentic-dev-kit-dist",
+  "expired": false,
+  "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "workflow_run": {
+    "id": 36281705940,
+    "head_sha": "034d46bf8d4e4aaa0dd35e433df4e1a55c7d55b0"
+  }
+}

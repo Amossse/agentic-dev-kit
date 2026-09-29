@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.0 — 2026-09-30
+
+- Add Artifact Run Audit to verify GitHub metadata linking one non-expired
+  Actions artifact to an exact successful workflow run and commit.
+- Upload a small distribution artifact in CI for a live example; include
+  offline fixtures, bilingual docs, tests, research, validation, and unposted
+  launch copy. The tool does not claim file-byte or test-content provenance.
+
 ## 0.10.0 — 2026-09-28
 
 - Add Workflow Run Audit to verify one GitHub Actions run against an exact

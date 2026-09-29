@@ -24,6 +24,7 @@ after Claude Code, Codex, or another CLI agent finishes.
 | [Required Check Audit](capabilities/cli/required-check-audit/README.md) | GitHub configuration CLI | Branch protection + exact check name → required-check decision | Released in v0.8.0 |
 | [Release Asset Audit](capabilities/cli/release-asset-audit/README.md) | Release verification CLI | Local files + published Release digests → byte-match decision | Released in v0.9.0 |
 | [Workflow Run Audit](capabilities/cli/workflow-run-audit/README.md) | CI evidence CLI | Run ID + expected commit/workflow/event → exact-run decision | Released in v0.10.0 |
+| [Artifact Run Audit](capabilities/cli/artifact-run-audit/README.md) | CI artifact CLI | Artifact ID + successful run/commit → metadata association decision | Released in v0.11.0 |
 
 The main repository is the installation, contribution and release entry point.
 Each capability has its own documentation and reproducible example. Future
@@ -32,11 +33,11 @@ there are no placeholder implementations.
 
 ## Install
 
-Requires Python 3.11+ and Git on PATH. No runtime Python dependencies. The three
+Requires Python 3.11+ and Git on PATH. No runtime Python dependencies. The four
 GitHub audit CLIs also need authenticated `gh`; local gates need no API access.
 
 ```bash
-uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.10.0
+uv tool install git+https://github.com/Amossse/agentic-dev-kit.git@v0.11.0
 staged-scope --version
 range-scope --version
 test-proof --version
@@ -47,9 +48,10 @@ pr-event-gate --version
 required-check-audit --version
 release-asset-audit --version
 workflow-run-audit --version
+artifact-run-audit --version
 ```
 
-Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.10.0`.
+Alternative: `python3.11 -m pip install git+https://github.com/Amossse/agentic-dev-kit.git@v0.11.0`.
 
 ## Five-minute quick start
 
@@ -158,6 +160,15 @@ workflow-run-audit OWNER/REPO --run 123456789 --sha FULL_COMMIT_SHA \
 
 See the [public and offline Workflow Run Audit examples](capabilities/cli/workflow-run-audit/README.md).
 
+Bind one Actions artifact to that successful run and commit:
+
+```bash
+artifact-run-audit OWNER/REPO --artifact ARTIFACT_ID --run RUN_ID \
+  --sha FULL_COMMIT_SHA --workflow .github/workflows/ci.yml --event push
+```
+
+See the [Artifact Run Audit example and metadata limits](capabilities/cli/artifact-run-audit/README.md).
+
 ## Boundaries
 
 The inspected CLI uses fixed read-only Git commands. It does not run a model,
@@ -202,6 +213,10 @@ Workflow Run Audit reads a single GitHub Actions run. Its success does not
 prove which jobs ran, that the check is required, or that published assets are
 the tested bytes. Offline snapshots are not authenticated.
 
+Artifact Run Audit checks GitHub's metadata association, not the downloaded
+archive bytes or the contents of files inside it. It does not prove the files
+were tested or match a Release asset.
+
 Policy Gate reads policy from the caller's base commit; a trusted CI base SHA,
 required status check, and CODEOWNERS or equivalent review are needed to make it
 an owner-controlled merge gate. It does not set GitHub permissions.
@@ -209,8 +224,8 @@ an owner-controlled merge gate. It does not set GitHub permissions.
 ## Project and contribution
 
 MIT. [License](LICENSE) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
-· [Latest research and existing tools](docs/research-2026-09-28.md)
-· [Latest validation](docs/validation-2026-09-28.md) · [Prepared launch copy](PROMOTION.md).
+· [Latest research and existing tools](docs/research-2026-09-30.md)
+· [Latest validation](docs/validation-2026-09-30.md) · [Prepared launch copy](PROMOTION.md).
 
 Search terms: Claude Code workflow, coding agent handoff, staged Git scope,
 agentic developer toolkit, commit boundary, monorepo change gate, test evidence
@@ -220,6 +235,7 @@ trusted pull request event gate.
 Also: GitHub required status check audit, branch protection check, agent PR merge gate.
 GitHub Release SHA-256 audit, published wheel digest check, artifact integrity.
 Exact commit CI verification, GitHub Actions run SHA audit, workflow evidence.
+Actions artifact run association, artifact commit SHA audit, CI artifact evidence.
 
 Related earlier tools remain independently maintained:
 [Agent Footprint](https://github.com/Amossse/agent-footprint) for filesystem

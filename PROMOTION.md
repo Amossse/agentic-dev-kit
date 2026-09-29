@@ -1,5 +1,40 @@
 # Prepared launch copy — not posted
 
+## v0.11.0 English
+
+**Agentic Dev Kit v0.11.0 adds Artifact Run Audit.**
+
+Before a coding-agent handoff or release, check that the artifact you selected
+is associated with the exact successful GitHub Actions run and commit you
+expect. The read-only CLI checks two GitHub records and returns a machine-usable
+decision.
+
+```bash
+artifact-run-audit OWNER/REPO --artifact ARTIFACT_ID --run RUN_ID \
+  --sha FULL_COMMIT_SHA --workflow .github/workflows/ci.yml --event push
+```
+
+It checks metadata association, not archive bytes, test coverage, or equality
+with Release assets. Repository: https://github.com/Amossse/agentic-dev-kit
+Release: https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.11.0
+
+## v0.11.0 中文
+
+**Agentic Dev Kit v0.11.0 新增 Artifact Run Audit。**
+
+交付前，可以核对选中的 CI 附件是否属于预期提交上的成功运行。命令只读两份 GitHub 记录，给出可用于脚本的判定和退出码。
+
+```bash
+artifact-run-audit OWNER/REPO --artifact ARTIFACT_ID --run RUN_ID \
+  --sha FULL_COMMIT_SHA --workflow .github/workflows/ci.yml --event push
+```
+
+它只核对元数据关联，不验证压缩包字节、测试覆盖范围或 Release 附件一致性。
+仓库：https://github.com/Amossse/agentic-dev-kit
+版本：https://github.com/Amossse/agentic-dev-kit/releases/tag/v0.11.0
+
+---
+
 ## v0.10.0 English
 
 **Agentic Dev Kit v0.10.0 adds Workflow Run Audit.**
