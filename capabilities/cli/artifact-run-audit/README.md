@@ -44,6 +44,10 @@ artifact snapshot is synthetic; it was not uploaded by run 36281705940.
 The two snapshot options must be used together. See
 [validation](../../../docs/validation-2026-09-30.md) for the live probe.
 
+The live probe used artifact `11068534090`, run `36646616190`, and commit
+`5a10ec0eb46ba349ffa75c7d10c18ff86aa242d8`; it returned `matched`.
+This example remains queryable only while GitHub retains that artifact.
+
 ## Implementation and configuration
 
 The CLI uses fixed, read-only `gh api` calls for one artifact ID and one run

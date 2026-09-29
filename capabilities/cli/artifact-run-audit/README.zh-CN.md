@@ -36,6 +36,8 @@ python3.11 -m agentic_devkit.artifact_run_audit Amossse/agentic-dev-kit \
 
 预期与实测均为退出 `0`、`"state": "matched"`。把附件关联的运行 ID 改掉会退出 `1`，显示 `"state": "rejected"`。附件快照是合成数据，并非 run 36281705940 实际上传。两项快照参数必须同时传入；真实调用见[验证记录](../../../docs/validation-2026-09-30.md)。
 
+真实调用使用附件 `11068534090`、运行 `36646616190` 和提交 `5a10ec0eb46ba349ffa75c7d10c18ff86aa242d8`，结果为 `matched`。GitHub 清理过期附件后，这条示例将无法再查询。
+
 ## 实现与配置
 
 命令以固定参数调用两次只读 `gh api`，分别读取指定附件和运行记录。它限制 JSON 大小、拒绝重复键，复用 Workflow Run Audit 的提交、workflow、事件和成功判定，再核对附件的运行关联、过期状态与摘要格式。配置仅为 `OWNER/REPO` 和命令行参数。认证由 `gh` 管理。
